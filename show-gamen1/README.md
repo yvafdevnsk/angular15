@@ -1,27 +1,89 @@
-# ShowGamen1
+# 画面1を表示する
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+- Angular v15.2.4
 
-## Development server
+## ワークスペースを作成する
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+ワークスペースを作成するディレクトリに移動する。
+```
+cd /home/mizuki/workspace/angular15
+```
 
-## Code scaffolding
+ワークスペースを作成する。
+```
+npx ng new show-gamen1
+? Would you like to add Angular routing? (y/N)   -> [Yes]
+? Which stylesheet format would you like to use? -> [SCSS]
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ワークスペースに移動する。
+```
+cd show-gamen1
+```
 
-## Build
+ローカルで実行する。
+```
+npx ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+ブラウザで表示する。
+```
+http://localhost:4200/
+```
 
-## Running unit tests
+## 画面1のコンポーネントを追加する
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ワークスペースに移動する。
+```
+cd /home/mizuki/workspace/angular15/show-gamen1
+```
 
-## Running end-to-end tests
+画面1のコンポーネントを追加する。
+```
+npx ng generate component gamen1
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+画面が見つからない場合のコンポーネントを追加する。
+```
+npx ng generate component page-not-found
+```
 
-## Further help
+## 画面1のコンポーネントを表示する
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+src/app/app.component.html
+- 既存のコードを削除して以下の行だけにする。
+```
+<router-outlet></router-outlet>
+```
+
+src/app/app-routing.module.ts
+- ルーティング情報を記述する。
+```
+import { Gamen1Component } from './gamen1/gamen1.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+const routes: Routes = [
+    { path: 'gamen1', component: Gamen1Component },
+    { path: '', redirectTo: '/gamen1', pathMatch: 'full' },
+    { path: '**', component: PageNotFoundComponent }
+];
+```
+
+src/app/app-routing.module.ts
+- enableTracingでブラウザのコンソールにデバッグ出力を行う。
+```
+@NgModule({
+    imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+    exports: [RouterModule]
+})
+```
+
+ローカルで実行する。
+```
+npx ng serve
+```
+
+ブラウザで表示する。
+```
+http://localhost:4200/
+```
